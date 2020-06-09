@@ -25,10 +25,8 @@ you only have to do this once (when you install arjan for the first time).
 
 1. Install the arjan cli globally `npm i -g arjan-cli`
 2. If you already have a local AWS profile that you intend to use with arjan you can disregard steps 3 - 5.
-3. create an IAM user with programmatic access and an admin policy. Run `arjan init IAM_USER_NAME AWS_REGION -g`. this will pop open a browser window with the AWS console.
-4. Finish creating the IAM user in the AWS console and hold on to the keys.
+3. Run `arjan init <IAM_USER_NAME> <AWS_REGION> -g`. This will pop open a browser window with the AWS console; Finish creating the IAM user and hold on to the keys.
 5. Update/create the local AWS profile on your machine by adding the profile and keys in the format shown bellow. The AWS profiles are stored in `~/.aws/credentials` on mac/linux or in `C:\Users\USER_NAME\.aws\credentials` on windows.
-
 
         [profilename]
         aws_access_key_id = <YOUR_ACCESS_KEY_ID>
@@ -39,8 +37,7 @@ you only have to do this once (when you install arjan for the first time).
 
 before being able to use arjan in a particular project you must:
 
-6. go into the projects root directory `cd project_path`
-7. run `arjan init AWS_PROFILE AWS_REGION` (without the -g flag)
+1. go into the desired project's root directory `cd project_path` and run `arjan init <AWS_PROFILE> <AWS_REGION>` (without the -g flag)
 
 now you can run any of the LOAD commands (All of the commands are always meant to be run from the root of your project). for more info check out the CLI’s README or run `arjan --help`. For more information on each of the commands check out their respective sections in the docs or run `arjan COMMAND` `--``help`
 
