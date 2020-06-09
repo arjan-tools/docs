@@ -12,7 +12,7 @@ Arjan uses several popular node js modules and builds some functionalities on to
 
 ## Philosophy
 
-With all the [APIs](https://developer.mozilla.org/en-US/docs/Web/API) and new features that have been and continue being added to the web, including the support for ES6 syntax it seems that vanilla js will always continue becoming more usable and powerful. So in the end, if this is what the browser is using, and its super powerful, unless we have a very specific reason, why should we be using something else that compiles into something else that then compiles into the vanilla js that the browser understands??!
+With all the [APIs](https://developer.mozilla.org/en-US/docs/Web/API) and new features that have been and continue being added to the web, including the support for ES6 syntax it seems that vanilla js will always continue becoming more usable and powerful. So in the end, if this is what the browser is using, and its super powerful, unless we have a very specific reason, why should we be using something else that compiles into something else that then compiles into the vanilla js that the browser understands??!  
 
 the purpose of the load workflow is to allow to continue doing what your doing (i.e. using HTML5, CSS3 and VanillaJS) and help you take your projects to production with the minimum amount of overhead. Avoid learning any new frameworks. Avoid having to constantly download and maintain many things at once. Avoid having to pay for a service to do all these things for you.
 
@@ -25,10 +25,8 @@ you only have to do this once (when you install arjan for the first time).
 
 1. Install the arjan cli globally `npm i -g arjan-cli`
 2. If you already have a local AWS profile that you intend to use with arjan you can disregard steps 3 - 5.
-3. create an IAM user with programmatic access and an admin policy. Run `arjan init IAM_USER_NAME AWS_REGION -g`. this will pop open a browser window with the AWS console.
-4. Finish creating the IAM user in the AWS console and hold on to the keys.
+3. Run `arjan init <IAM_USER_NAME> <AWS_REGION> -g`. This will pop open a browser window with the AWS console; Finish creating the IAM user and hold on to the keys.
 5. Update/create the local AWS profile on your machine by adding the profile and keys in the format shown bellow. The AWS profiles are stored in `~/.aws/credentials` on mac/linux or in `C:\Users\USER_NAME\.aws\credentials` on windows.
-
 
         [profilename]
         aws_access_key_id = <YOUR_ACCESS_KEY_ID>
@@ -39,15 +37,14 @@ you only have to do this once (when you install arjan for the first time).
 
 before being able to use arjan in a particular project you must:
 
-6. go into the projects root directory `cd project_path`
-7. run `arjan init AWS_PROFILE AWS_REGION` (without the -g flag)
+1. go into the desired project's root directory `cd project_path` and run `arjan init <AWS_PROFILE> <AWS_REGION>` (without the -g flag)
 
 now you can run any of the LOAD commands (All of the commands are always meant to be run from the root of your project). for more info check out the CLI’s README or run `arjan --help`. For more information on each of the commands check out their respective sections in the docs or run `arjan COMMAND` `--``help`
 
 
 # Directory Structure
 
-when you run the init command (without the -g flag) it creates some directories and files inside your project. after that, each of the commands will also generate some directories/files. bellow is a depiction of how a simple project that only consists of an index.html file would look after its undergone the LOAD commands (localize, optimize, audit, deploy).  In th eexample the file was translated into spanish.
+when you run the init command (without the -g flag) it creates some directories and files inside your project. after that, each of the commands will also generate some directories/files. Bellow is a depiction of how a simple project that only consists of an index.html file would look after its undergone the LOAD commands (localize, optimize, audit, deploy).  In the example the file was translated into Spanish.
 
 
     |--index.html
@@ -77,7 +74,7 @@ when you run the init command (without the -g flag) it creates some directories 
     - optimize_config/audit_config contain the default configurations for the optimize/audit commands. when flags arent supplied, the settings defined in these config files are used.
     - changesets contain a json object with the changset name and the template body for that changset as well as any existingResources.
     - locales contains all of your json locales stored according to their language and filename. localenames are equivalent to the path of the file transformed in the following way `filePath.substr(0, filePath.lastIndexOf(".")).replace(/\//g, '_')`
-    - exports/csv contains the locales that have been converted into CSV
+    - exports/csv contain the locales that have been converted into CSV
 
 
 
@@ -86,45 +83,48 @@ when you run the init command (without the -g flag) it creates some directories 
 
 ## Intro
 
-Arjan Localize is node module for automatically localizing and translating html sites. It features a powerful CLI command that allows you to localize multiple pages into multiple languages with a single command. It has a modular API Since it can export content into popular formats like JSON and CSV, it may also work as a very basic content management solution for html sites.
+Arjan Localize is node module for automatically localizing and translating html sites. It features a powerful CLI command that allows you to localize multiple pages into multiple languages with a single command. It has a modular API and since it can export content into popular formats like JSON and CSV, it may also work as a very basic content management solution for html sites.
 
 
 ## What is Localization
 
-Localization consists of adapting a product to a particular locality or region. Even though machine translation services like google translate and amazon translate have gotten impressively good, there still are several scenarios were manual intervention is needed. If you are expanding your digital product/service into a new region its important to get everything perfect. Complex grammar rules and slang often cause errors in the translation making some manual intervention or at least revision necessary. Also a project that has been correctly localized will have way better SEO. Additionally text content might not be the only thing that you want to localize; you might also need to use different images/videos and hyperlinks in your different versions.
+Localization consists of adapting a product to a particular locality or region. Even though machine translation services like google translate and amazon translate have gotten impressively good, there are still several scenarios were manual intervention is needed. If you are expanding your digital product/service into a new region its important to get everything perfect. Complex grammar rules and slang often cause errors in the translation making some manual intervention or at least revision necessary. Also a project that has been correctly localized will have way better SEO. Additionally, text content might not be the only thing that you want to localize; you might also need to use different images/videos and hyperlinks in your different versions.
 
-A common practice is to create JSON files called locales that contain the text content of site/app. then instead of using words in your file you use variables that read from the locale object. This way content modification dont have to be made directly in the code. In genral this makes your internationalized project easier to maintain.
+A common practice is to create JSON files called locales that contain the text content of site/app. Then instead of using words in your file, you use variables that read from the locale object. This way content modification doesn't have to be made directly in the code. In general, this makes your internationalized project easier to maintain.
 
 ## Automatic localization
 
-Arjan uses the id attributes already present in your html as the keys in the locale. The parser in arjan localize gets all the existing IDs of html elements with text content, and saves them in the locale. If the element didnt have an ID arjan automatically creates an ID for the object with the following format:  The first 12 characters of the text, replacing spaces with underscores and adding the translation index at the end.
+Arjan uses the id attributes already present in your html as the keys in the locale. The parser in Arjan Localize gets all the existing IDs of html elements with text content, and saves them in the locale. If the element didn't have an ID Arjan automatically creates an ID for the object with the following format:  The first 12 characters of the text, replacing spaces with underscores and adding the translation index at the end.
 
 ## Automatic translation
 
-Arjan localize also helps you to automatically translate your JSON locales and files in up to 54 different languages. It uses AWS’s neural machine translation system which is used in amazon.com. 
+Arjan Localize also helps you to automatically translate your JSON locales and files in up to 54 different languages. It uses AWS’s neural machine translation system which is used in amazon.com. 
 
 ## Usage
 
-There’s three ways in which you can use arjan localize. The three are listed bellow with their pros and cons.
+There’s three ways in which you can use Arjan Localize. The three are listed bellow with their pros and cons.
 
-1. **Programmatic usage**
-    1. Pros: integrate into other programs and workflows
-    2. Cons: requires setup for each project
-2. **Arjan CLI** 
+
+1. **Arjan CLI** 
     1. pros: 
         1. translate multiple pages
         2. bi-directional translation updates
     2. cons: No GUI. basic terminal usage knowledge
-3. **The Arjan Localization GUI**
+2. **The Arjan Localization GUI**
     1. Pros: 
         1. GUI
         2. No AWS account needed.
     2. cons: 
         1. only translate a single page at a time
         2. cannot update translations
+
+3. **Programmatic usage**
+    1. Pros: integrate into other programs and workflows
+    2. Cons: requires setup for each project
+
 ## Arjan translate GUI
 
-Arjan translate has a GUI at [arjan.tools/translate](http://arjan.tools/trans;ate.html). The GUI is a form with a dropzone made with [super easy forms](http://supereasyforms.com) which features a node.js lambda function as its backend. The GUI is pretty limited as you cant update your translations but its good for a one time job especially if you dont like using the terminal. 
+Arjan translate has a GUI at [arjan.tools/translate](http://arjan.tools/trans;ate.html). The GUI is a form with a drop zone made with [super easy forms](http://supereasyforms.com) which features a node.js lambda function as its backend. The GUI is pretty limited as you cant update your translations but its good for a one time job especially if you don't like using the terminal. 
 
 ## CLI
 
@@ -165,10 +165,9 @@ You can also generate a single CSV file with all the translations for your site 
       }
     })
 
-
 ## Output Path Generation
 
-translate locale considers that you can have 3 different routing formats for a multilingual HTML site. Lets take the following file for example: `blog/posts/post1.html`
+Translate locale considers that you can have 3 different routing formats for a multilingual HTML site. Let's take the following file for example: `blog/posts/post1.html`
 
 1. **none**: You haven't structured your site to be multilingual. 
 2. **file**: You are using the language code as the name of the file. for example `blog/posts/article1/``en``.html`
@@ -180,7 +179,7 @@ translate locale considers that you can have 3 different routing formats for a m
 - In Case 3, alike case 1, a directory with the name of the output language will be created in the root.
 ## Translation Format
 
-The example compares arjan with i18n; Lets suppose our input is an en.html file with the following content: 
+The example compares Arjan with i18n; Lets suppose our input is an en.html file with the following content: 
 
     <section>
       <h1 id="title1">Arjan is super cool</h1>
@@ -193,7 +192,7 @@ After running the translate command we would get the following output:
     1. Arjan→ `<h1 id="title1"> Arjan is super cool </h1>`
     2. I18n → `<h1 id="title1"> {{arjan.t('title1)}} </h1>`
 
-Lets suppose that our input string didnt have an id attribute:
+Let's suppose that our input string didn't have an id attribute:
 
 1. locales/en.json → `{ "arjan_is_sup1":"Arjan is super cool" }`
 2. en.html 
@@ -203,7 +202,7 @@ Lets suppose that our input string didnt have an id attribute:
 Notice that an id with the first 12 characters of the string is created. Caps are lower-cased and spaces are replaced with underscores. A number with the index of the translations is inserted at the end (in case there’s another string that starts with the same 12 chars)
 
 **HTML5 option (Coming Soon)** 
-if you are using html5 elements in your page (nav, header, section, footer) you can add the html5 option in the translate command. This will generate objects with ids of html5 elements (nav, header, section, footer) and will insert translations as children of the object they belong to. suppose were still using the example above without ids:
+If you are using html5 elements in your page (nav, header, section, footer) you can add the html5 option in the translate command. This will generate objects with ids of html5 elements (nav, header, section, footer) and will insert translations as children of the object they belong to. suppose were still using the example above without ids:
 
 1. translations/en.json → `{ "section1":{"arjan_is_sup":"Arjan is super cool" }}`
 
@@ -221,9 +220,9 @@ if you are using html5 elements in your page (nav, header, section, footer) you 
     </section>
 
 
-## Dont translate (Coming Soon)
+## Don't translate (Coming Soon)
 
-You can use the [HTML translate tag](https://www.w3schools.com/tags/att_global_translate.asp) to tell arjan if you dont want to translate a particular element by setting `translate="no"` in your element
+You can use the [HTML translate tag](https://www.w3schools.com/tags/att_global_translate.asp) to tell Arjan if you don't want to translate a particular element by setting `translate="no"` in your element
 
 
 ## Supported Languages (AWS translate)
@@ -295,7 +294,7 @@ Arjan Optimize helps you optimize all of your static assets with a single comman
 
 ## What is minification and why should i use it?
 
-Most CDN’s like cloudfront, allow you to compress file off the fly using GZIP. So why should you minify? Essentially minification and compression are two different techniques that can be used to reduce filesize. One technique doesnt override the the other and for optimal result you should use both. If you want to learn more about minification/gzip compression and their differences, CSS Tricks’s Chris Coyier gives a great exaplanation in this [article](https://css-tricks.com/the-difference-between-minification-and-gzipping/).
+Most CDN’s like Cloudfront, allow you to compress file off the fly using GZIP. So why should you minify? Essentially minification and compression are two different techniques that can be used to reduce file size. One technique doesnt override the the other and for optimal result you should use both. If you want to learn more about minification/gzip compression and their differences, CSS Tricks’s Chris Coyier gives a great exaplanation in this [article](https://css-tricks.com/the-difference-between-minification-and-gzipping/).
 
 ## features
 1. easy installation
@@ -373,7 +372,7 @@ this will be replaced by:
 # Arjan Audit 
 ## Intro
 
-Arjan audit is a simple node module that helps automate the auditing process of static sites during the dev process using Google’s lighthouse 6. 
+Arjan audit is a simple node module that helps automate the auditing process of static sites during the dev process using Google’s Lighthouse 6. 
 
 ## Why?
 
@@ -388,7 +387,7 @@ the threshold value is a number from 0 to 1 that represents your personal thresh
 
 ## Getting Started 
 1. install the arjan CLI globally. `npm i -g arjan-cli`
-2. inside your proejct direcotry, initialize arja `arjan init`
+2. inside your project directory, initialize arjan `arjan init`
 3. run an audit `arjan audit`
 
 
@@ -401,7 +400,7 @@ the threshold value is a number from 0 to 1 that represents your personal thresh
 
 ## The Audit Report
 
-the audit report is a subset of data from the JSON response of lighthouse 6. for more information on the parameters of lighthouse 6 see this [link](http://for more information on audit properties: https://github.com/GoogleChrome/lighthouse/blob/master/docs/understanding-results.md#audit-properties)
+the audit report is a subset of data from the JSON response of lighthouse 6. For more information on the parameters of lighthouse 6 see this [link](http://for more information on audit properties: https://github.com/GoogleChrome/lighthouse/blob/master/docs/understanding-results.md#audit-properties)
 
 
     {
@@ -436,7 +435,7 @@ the audit report is a subset of data from the JSON response of lighthouse 6. for
 
 ## Lighthouse 6 score
 
-Google recently recalculated the score of what they consdier a healthy fats site. The new LCP metric was introduced and the score weights and metrics were changed. for mor einformation check out Google’s [Web Vitals](https://web.dev/vitals/) 
+Google recently recalculated the score of what they consdier a healthy fast site. The new LCP metric was introduced and the score weights and metrics were changed. For more information check out Google’s [Web Vitals](https://web.dev/vitals/) 
 
 | Audit                                                                  | Weight |
 | ---------------------------------------------------------------------- | ------ |
@@ -527,11 +526,16 @@ Google recently recalculated the score of what they consdier a healthy fats site
 - tap-targets
 - hreflang
 - plugins
-- 
+
 # Arjan Deploy
 # Intro
 
 Arjan deploy is a tool that helps you deploy static websites to the AWS cloud using Cloudformation. The tool is modular and can be used with the Arjan CLI, or programmatically in your own node.js project. Arjan Deploy gives you several different options to deploy your static sites in AWS and it also helps you import existing AWS projects, or individual resources into your websites project.
+
+
+Arjan deploy also helps you import existing sites into your CloudFromation stack. For example, suppose you had previously created a public bucket and a hosted zone for yourdomain.com. Now you decide you want to add a CDN with HTTPS to your site. When you run the updateStack command, Arjan will automatically find these resources and import them into your Cloudformation template which will also contain the certificate and the Cloudfront distribution.
+In general, it’s better practice to use Cloudformation template when you have a project that requires various pieces of infrastructure that depend or interact with one another. It just makes your project easier to keep track of and maintain.
+
 
 ## Why not just use the AWS SDK for JS and CloudFormation directly?
 
@@ -561,7 +565,7 @@ In order to deploy a production site you must have already purchased a domain fr
 
 ## Setups
 
-For an easier development workflow we have defined some setups that include dev, test and prod (production). you can customize these by additionally providing flags.
+For an easier development workflow we have defined some setups that include dev, test and prod (production). You can customize these by additionally providing flags.
 **dev → test → prod**
 
 
@@ -856,19 +860,17 @@ _See code: [src/commands/upload.js](https://github.com/arjan-tools/cli/blob/v0.1
 - **Params: (html)**
     - **html:** string: HTML content to parse.
 - **returns:** Promise(resolve, reject)
-    - **resolve: ({size:size, locale:locale, html:html1})**
-        - **size:**  int: number of items in the locale
+    - **resolve: ({locale:locale, html:html})**
         - **locale:** string: JSON string with the locale.
         - **html:** string: Modified HTML containing the necessary ID’s
     - **reject:** error
 
-**TranslateLocale(input, from, to, size)**
+**TranslateLocale(input, language, translation)**
 - **Description:** Translates each value using amazon translate then generates or re-writes a JSON file that contains ids and translated values. 
-- **params: (input, from, to, size)**
+- **params: (input, language, translation)**
     - **input:** string: Locale to parse
     - **language:** string: Approporiate lanugage code for the input locale’s language.
     - **translation:** string: Appropriate lanugage code for the desired output language
-    - **size:** int
 - **returns:** Promise(resolve, reject)
     - **resolve:** translation: string
     - **reject:** error
