@@ -12,39 +12,40 @@ Arjan uses several popular node js modules and builds some functionalities on to
 
 ## Philosophy
 
-With all the [APIs](https://developer.mozilla.org/en-US/docs/Web/API) and new features that have been and continue being added to the web, including the support for ES6 syntax it seems that vanilla js will always continue becoming more usable and powerful. So in the end, if this is what the browser is using, and its super powerful, unless we have a very specific reason, why should we be using something else that compiles into something else that then compiles into the vanilla js that the browser understands??!  
+With all the [APIs](https://developer.mozilla.org/en-US/docs/Web/API) and new features that have been and continue being added to the web, including the support for ES6 syntax it seems that vanilla js will always continue becoming more usable and powerful. So in the end, if this is what the browser is using, and it's super powerful, unless we have a very specific reason, why should we be using something else that compiles into something else that then compiles into the vanilla js that the browser understands??!  
 
-the purpose of the load workflow is to allow to continue doing what your doing (i.e. using HTML5, CSS3 and VanillaJS) and help you take your projects to production with the minimum amount of overhead. Avoid learning any new frameworks. Avoid having to constantly download and maintain many things at once. Avoid having to pay for a service to do all these things for you.
+The purpose of the load workflow is to allow you to continue doing what you're doing (i.e. using HTML5, CSS3 and VanillaJS) and help you take your projects to production with the minimum amount of overhead. Avoid learning new frameworks, having to constantly download and maintain many things at once or pay for a service to do all these things for you.
 
 
 # Getting started
 
 ## One time setup
 
-you only have to do this once (when you install arjan for the first time). 
+Only do this once when you install arjan for the first time. 
 
 1. Install the arjan cli globally `npm i -g arjan-cli`
-2. If you already have a local AWS profile that you intend to use with arjan you can disregard steps 3 - 5.
-3. Run `arjan init <IAM_USER_NAME> <AWS_REGION> -g`. This will pop open a browser window with the AWS console; Finish creating the IAM user and hold on to the keys.
-5. Update/create the local AWS profile on your machine by adding the profile and keys in the format shown bellow. The AWS profiles are stored in `~/.aws/credentials` on mac/linux or in `C:\Users\USER_NAME\.aws\credentials` on windows.
+2. If you already have a local AWS profile that you intend to use with arjan you can disregard steps 3 - 4.
+3. Run `arjan init <IAM_USER_NAME> <AWS_REGION> -g`. This will pop open a browser window with the AWS console; finish creating the IAM user and hold on to the keys.
+4. Update/create the local AWS profile on your machine by adding the profile and keys in the format shown below.
 
         [profilename]
         aws_access_key_id = <YOUR_ACCESS_KEY_ID>
         aws_secret_access_key = <YOUR_SECRET_ACCESS_KEY>
 
+ The AWS profiles are stored in `~/.aws/credentials` on mac/linux or in `C:\Users\USER_NAME\.aws\credentials` on windows.
 
 ## Project setup
 
-before being able to use arjan in a particular project you must:
+Before using Arjan in a particular project:
 
-1. go into the desired project's root directory `cd project_path` and run `arjan init <AWS_PROFILE> <AWS_REGION>` (without the -g flag)
+1. Go into the desired project's root directory and run `arjan init <AWS_PROFILE> <AWS_REGION>` (without the -g flag).
 
-now you can run any of the LOAD commands (All of the commands are always meant to be run from the root of your project). for more info check out the CLI’s README or run `arjan --help`. For more information on each of the commands check out their respective sections in the docs or run `arjan COMMAND` `--``help`
+Now you can run any of the LOAD commands (all of the commands are always meant to be run from the root of your project). For more info check out the CLI’s README or run `arjan --help`. For more information on each of the commands check out their respective sections in the docs or run `arjan COMMAND` `--``help`
 
 
 # Directory Structure
 
-when you run the init command (without the -g flag) it creates some directories and files inside your project. after that, each of the commands will also generate some directories/files. Bellow is a depiction of how a simple project that only consists of an index.html file would look after its undergone the LOAD commands (localize, optimize, audit, deploy).  In the example the file was translated into Spanish.
+When you run the init command (without the -g flag) it creates the directory arjan_config and files inside your project. Apart from that, each of the tools will also generate new directories/files. Below is a depiction of how a simple project that only consists of an index.html file would look after it has undergone the LOAD commands (localize, optimize, audit, deploy).  In the example the file was translated into Spanish.
 
 
     |--index.html
@@ -71,9 +72,9 @@ when you run the init command (without the -g flag) it creates some directories 
 - dep_pack is a directory that contains your optimized deployment package. 
 - go to this section for more information on available output formats of localization
 - everything else is inside the arjan_config directory
-    - optimize_config/audit_config contain the default configurations for the optimize/audit commands. when flags arent supplied, the settings defined in these config files are used.
-    - changesets contain a json object with the changset name and the template body for that changset as well as any existingResources.
-    - locales contains all of your json locales stored according to their language and filename. localenames are equivalent to the path of the file transformed in the following way `filePath.substr(0, filePath.lastIndexOf(".")).replace(/\//g, '_')`
+    - optimize_config/audit_config contain the default configurations for the optimize/audit commands. When flags aren't supplied, the settings defined in these config files are used.
+    - changesets contain a JSON object with the changeset name and the template body for that changeset as well as any existingResources.
+    - Locales contain all of your JSON locales stored according to their language and filename. localenames are equivalent to the path of the file transformed in the following way `filePath.substr(0, filePath.lastIndexOf(".")).replace(/\//g, '_')`
     - exports/csv contain the locales that have been converted into CSV
 
 
@@ -83,14 +84,14 @@ when you run the init command (without the -g flag) it creates some directories 
 
 ## Intro
 
-Arjan Localize is node module for automatically localizing and translating html sites. It features a powerful CLI command that allows you to localize multiple pages into multiple languages with a single command. It has a modular API and since it can export content into popular formats like JSON and CSV, it may also work as a very basic content management solution for html sites.
+Arjan Localize is a node module for automatically localizing and translating html sites. It features a powerful CLI command that allows you to localize multiple pages into multiple languages with a single command. It has a modular API and since it can export content into popular formats like JSON and CSV, it may also work as a very basic content management solution for html sites.
 
 
 ## What is Localization
 
-Localization consists of adapting a product to a particular locality or region. Even though machine translation services like google translate and amazon translate have gotten impressively good, there are still several scenarios were manual intervention is needed. If you are expanding your digital product/service into a new region its important to get everything perfect. Complex grammar rules and slang often cause errors in the translation making some manual intervention or at least revision necessary. Also a project that has been correctly localized will have way better SEO. Additionally, text content might not be the only thing that you want to localize; you might also need to use different images/videos and hyperlinks in your different versions.
+Localization consists of adapting a product to a particular locality or region. Even though machine translation services like google translate and amazon translate have gotten impressively good, there are still several scenarios where manual intervention is needed. If you are expanding your digital product/service into a new region it's important to get everything perfect. Complex grammar rules and slang often cause errors in the translation making some manual intervention or at least revision necessary. Also a project that has been correctly localized will have better SEO. Additionally, text content might not be the only thing that you want to localize; you might also need to use different images/videos and hyperlinks in your different versions.
 
-A common practice is to create JSON files called locales that contain the text content of site/app. Then instead of using words in your file, you use variables that read from the locale object. This way content modification doesn't have to be made directly in the code. In general, this makes your internationalized project easier to maintain.
+A common practice is to create JSON files called locales that contain the text content of a site/app. Then instead of using words in your file, you use variables that read from the locale object. This way content modification doesn't have to be made directly in the code. In general, this makes your internationalized project easier to maintain.
 
 ## Automatic localization
 
@@ -102,7 +103,7 @@ Arjan Localize also helps you to automatically translate your JSON locales and f
 
 ## Usage
 
-There’s three ways in which you can use Arjan Localize. The three are listed bellow with their pros and cons.
+There’s three ways in which you can use Arjan Localize. The three are listed below with their pros and cons.
 
 
 1. **Arjan CLI** 
@@ -124,7 +125,7 @@ There’s three ways in which you can use Arjan Localize. The three are listed b
 
 ## Arjan translate GUI
 
-Arjan translate has a GUI at [arjan.tools/translate](http://arjan.tools/trans;ate.html). The GUI is a form with a drop zone made with [super easy forms](http://supereasyforms.com) which features a node.js lambda function as its backend. The GUI is pretty limited as you cant update your translations but its good for a one time job especially if you don't like using the terminal. 
+Arjan translate has a GUI at [arjan.tools/translate](http://arjan.tools/trans;ate.html). The GUI is a form with a drop zone made with [super easy forms](http://supereasyforms.com) which features a node.js lambda function as its backend. The GUI is pretty limited as you can't update your translations but it's good for a one time job especially if you don't like using the terminal. 
 
 ## CLI
 
@@ -134,7 +135,7 @@ Arjan translate has a GUI at [arjan.tools/translate](http://arjan.tools/trans;at
 
 ## Updating content
 
-the translate command generates 2 or 3 things
+The translate command generates 2 or 3 things
 
 1. **locale JSON files** for the input and output languages
 2. **translated html file/s** with the output language code (es.html or es/about.html)
@@ -154,7 +155,7 @@ You can also generate a single CSV file with all the translations for your site 
     const arjanTranslate = require('arjan-translate')
     
     //REGION is the AWS region of your IAM role ex. 'use-east-1'
-    //PROFILE is the name of your desired AWS IAM profile ex. 'deafult'
+    //PROFILE is the name of your desired AWS IAM profile ex. 'default'
     
     arjanTranslate.Build('REGION', 'PROFILE', function(err, data){
       if(err) console.log(err)
@@ -179,7 +180,7 @@ Translate locale considers that you can have 3 different routing formats for a m
 - In Case 3, alike case 1, a directory with the name of the output language will be created in the root.
 ## Translation Format
 
-The example compares Arjan with i18n; Lets suppose our input is an en.html file with the following content: 
+The example compares Arjan with i18n; 'Lets suppose our input is an en.html file with the following content: 
 
     <section>
       <h1 id="title1">Arjan is super cool</h1>
@@ -292,16 +293,16 @@ You can use the [HTML translate tag](https://www.w3schools.com/tags/att_global_t
 Arjan Optimize helps you optimize all of your static assets with a single command. It takes into account several of the modern web dev directives and uses some of the most popular node modules for minification/compression of assets with a couple of neat features of its own.
 
 
-## What is minification and why should i use it?
+## What is minification and why should I use it?
 
-Most CDN’s like Cloudfront, allow you to compress file off the fly using GZIP. So why should you minify? Essentially minification and compression are two different techniques that can be used to reduce file size. One technique doesnt override the the other and for optimal result you should use both. If you want to learn more about minification/gzip compression and their differences, CSS Tricks’s Chris Coyier gives a great exaplanation in this [article](https://css-tricks.com/the-difference-between-minification-and-gzipping/).
+Most CDN’s like Cloudfront, allow you to compress files off the fly using GZIP. So why should you minify? Essentially minification and compression are two different techniques that can be used to reduce file size. One technique does not override the other and for optimal results you should use both. If you want to learn more about minification/gzip compression and their differences, CSS Tricks’s Chris Coyier gives a great explanation in this [article](https://css-tricks.com/the-difference-between-minification-and-gzipping/).
 
 ## features
-1. easy installation
-2. compresses images to jpg/png/tiff/webp
-3. minifies svg
-4. converts images from any format to webp
-5. automatically replaces img tags in HTML
+1. Easy installation
+2. Compresses images to jpg/png/tiff/webp
+3. Minifies svg
+4. Converts images from any format to webp
+5. Automatically replaces img tags in HTML
 
 
 ## How it works
@@ -330,8 +331,8 @@ Arjan optimize scans your current directory recursively and for each file with a
 
 The webp option in Arjan Optimize does 2 things:
 
-1. converts all your images to webp using sharp and saves them (without overwritting images in original format)
-2. In the HTML files, it replaces each img tag with a picture tag that holds both its original compressed version and its webp version.
+1. Converts all your images to webp using sharp and saves them (without overwriting images in original format).
+2. In the HTML files, it replaces each img tag with a picture tag that holds both its original compressed version and it's webp version.
 
  Because webp is a relatively new format, it [is not supported by all browsers](https://caniuse.com/#feat=webp). The picture tag is a solution that allows unsupported browsers to fall back to the original version of the image. [This article](https://web.dev/serve-images-webp/) goes more in depth on webp and the picture tag. 
 
@@ -357,9 +358,9 @@ this will be replaced by:
       FILENAME  name of the file i.e. index.html
     
     OPTIONS
-      -c, --css     minifiy css using cssnano
+      -c, --css     minify css using cssnano
       -h, --html    compress html using html-minifier
-      -i, --images  compress images and if possible maintain the format, otherwise its converted to png.
+      -i, --images  compress images and if possible maintain the format, otherwise it's converted to png.
       -j, --js      minify js using uglify js
     
       -w, --webp    saves a webp version of each image, then replaces each image instance in the html files with a picture tag.
@@ -376,13 +377,13 @@ Arjan audit is a simple node module that helps automate the auditing process of 
 
 ## Why?
 
-Often times when building a site, the page speed test is one of the last things we do. Sometimes theres a surprise and the score is not that good. To avoid these surprises you can use Arjan Audit in your dev process or even integrate it into your tests.
+When building a site, the page speed test was one of the last things we used to do. Many times we would find a surprise with a bad SEO score that we had to fix after deploying.  To avoid these surprises you can use Arjan Audit in your dev process or even integrate it into your tests.
 
 ## How it works
 
-Arjan audit  uses [express](https://expressjs.com/) to serve your site and google [chrome-launcher](https://github.com/GoogleChrome/chrome-launcher) to make a headless launch of google chrome and retrieve the audits from lighthouse 6. Arjan then parses the results returned by lighthouse and returns an organized subset of the results. When used from the CLI, Arjan returns a console report that adds colors and recomendations based on your threshold value.
+Arjan audit  uses [express](https://expressjs.com/) to serve your site and google [chrome-launcher](https://github.com/GoogleChrome/chrome-launcher) to make a headless launch of google chrome and retrieve the audits from lighthouse 6. Arjan then parses the results returned by lighthouse and returns an organized subset of the results. When used from the CLI, Arjan returns a console report that adds colors and recommendations based on your threshold value.
 
-the threshold value is a number from 0 to 1 that represents your personal threshold for what you consider a decent enough site. the default is .8 (a B) 10 points above from this score is great, anything bellow isn't acceptable. this threshold value will filter out recommendations and add colors to your scores in the report.  
+The threshold value is a number from 0 to 1 that represents your personal threshold for what you consider a decent enough site. the default is .8 (a B) 10 points above from this score is great, anything below isn't acceptable. This threshold value will filter out recommendations and add colors to your scores in the report.  
 
 
 ## Getting Started 
@@ -400,7 +401,7 @@ the threshold value is a number from 0 to 1 that represents your personal thresh
 
 ## The Audit Report
 
-the audit report is a subset of data from the JSON response of lighthouse 6. For more information on the parameters of lighthouse 6 see this [link](http://for more information on audit properties: https://github.com/GoogleChrome/lighthouse/blob/master/docs/understanding-results.md#audit-properties)
+The audit report is a subset of data from the JSON response of lighthouse 6. For more information on the parameters of lighthouse 6 see this [link](http://for more information on audit properties: https://github.com/GoogleChrome/lighthouse/blob/master/docs/understanding-results.md#audit-properties)
 
 
     {
@@ -435,7 +436,7 @@ the audit report is a subset of data from the JSON response of lighthouse 6. For
 
 ## Lighthouse 6 score
 
-Google recently recalculated the score of what they consdier a healthy fast site. The new LCP metric was introduced and the score weights and metrics were changed. For more information check out Google’s [Web Vitals](https://web.dev/vitals/) 
+Google recently recalculated the score of what they consider a fast healthy site. The new LCP metric was introduced and the score weights and metrics were changed. For more information check out Google’s [Web Vitals](https://web.dev/vitals/) 
 
 | Audit                                                                  | Weight |
 | ---------------------------------------------------------------------- | ------ |
@@ -530,10 +531,9 @@ Google recently recalculated the score of what they consdier a healthy fast site
 # Arjan Deploy
 # Intro
 
-Arjan deploy is a tool that helps you deploy static websites to the AWS cloud using Cloudformation. The tool is modular and can be used with the Arjan CLI, or programmatically in your own node.js project. Arjan Deploy gives you several different options to deploy your static sites in AWS and it also helps you import existing AWS projects, or individual resources into your websites project.
+Arjan deploy is a tool that helps you deploy static sites to the AWS cloud using Cloudformation. The tool is modular and can be used with the Arjan CLI, or programmatically in your own Node.js project. Arjan Deploy gives you several different options to deploy your sites in the AWS Cloud.   Furthermore, it helps you import existing AWS projects, or individual resources into your site's project.
 
-
-Arjan deploy also helps you import existing sites into your CloudFromation stack. For example, suppose you had previously created a public bucket and a hosted zone for yourdomain.com. Now you decide you want to add a CDN with HTTPS to your site. When you run the updateStack command, Arjan will automatically find these resources and import them into your Cloudformation template which will also contain the certificate and the Cloudfront distribution.
+Arjan deploy also helps you import existing sites into your CloudFormation stack. For example, suppose you had previously created a public bucket and a hosted zone for yourdomain.com. Now you decide you want to add a CDN with HTTPS to your site. When you run the updateStack command, Arjan will automatically find these resources and import them into your Cloudformation templates which will also contain the certificate and the Cloudfront distribution.
 In general, it’s better practice to use Cloudformation template when you have a project that requires various pieces of infrastructure that depend or interact with one another. It just makes your project easier to keep track of and maintain.
 
 
@@ -555,10 +555,10 @@ Generally static sites in the cloud consist of an object storage solution (i.e. 
 1. go to your project's directory `cd your_project`
 2. run `arjan init PROFILE REGION`
 3. If you want your site to be online while still in development you can run `arjan deploy DOMAIN create`
-4. Then to update your stack to production you can run `arjan deploy DOMAIN update prod` this will add a route53 DNS, a cloudfront distribution and a verified SSL ceritifcate to your stack.
+4. Then to update your stack to production you can run `arjan deploy DOMAIN update prod` this will add a route53 DNS, a cloudfront distribution and a verified SSL certificate to your stack.
 5. alternatively you can just run `arjan deploy DOMAIN create prod` from the start.
 
-In order to deploy a production site you must have already purchased a domain from a domain name registrar and you should have their respective interface open in order to create DNS records or transfer nameservers. there are several popular options out there; we like to use namecheap because as the name suggests it, its cheap, and it also has great service.
+In order to deploy a production site you must have already purchased a domain from a domain name registrar and have their respective interface open in order to create DNS records or transfer nameservers. There are several popular options out there; we like to use Namecheap because as the name suggests it, it's cheap and they've got great service.
 
 ## Programmatic Usage
 
@@ -578,21 +578,22 @@ For an easier development workflow we have defined some setups that include dev,
 1. **CDN w/ Route53 DNS (http):** Deploys s3 bucket, route53 DNS, and a cloudfront distribution.
 2. **CDN w/ external DNS (http):** Deploys s3 bucket and a Cloudfront distribution. You must create a CNAME record (and reroute record) in your external DNS.
 3. **CDN w/ external DNS (https)**: Deploys s3 bucket and a Cloudfront distribution and creates certificates in ACM. You must create a CNAME record (and optionally a reroute record) in your external DNS.
+
 ## Route53 DNS
 
-Amazon Route 53 provides highly available and scalable Domain Name System (DNS), domain name registration, and health-checking web services. It is designed to give developers and businesses an extremely reliable and cost effective way to route end users to Internet applications by translating names like example.com into the numeric IP addresses, such as 192.0.2.1, that computers use to connect to each other.
+Amazon Route 53 provides a highly available and scalable Domain Name System (DNS), domain name registration, and health-checking web services. It is designed to give developers and businesses an extremely reliable and cost effective way to route end users to Internet applications by translating names like example.com into the numeric IP addresses, such as 192.0.2.1, that computers use to connect to each other.
 
-AWS Route53 has a $0.50/month cost (6$ a year). Its a better option than a standard DNS because:
+AWS Route53 has a $0.50/month cost (6$ a year). It's a better option than a standard DNS because:
 
 - Route 53 offers powerful routing policies to allow for efficient DNS requests.
 - You can combine your DNS with health-checking services to route traffic to healthy endpoints or to independently monitor and/or alarm on endpoints. 
-- Route 53 effectively connects user requests to infrastructure running in AWS – such as Amazon EC2 instances, Elastic Load Balancing load balancers, or Amazon S3 buckets
-- can also be used to route users to infrastructure outside of AWS.
+- Route 53 effectively connects user requests to infrastructure running in AWS – such as Amazon EC2 instances, Elastic Load Balancing load balancers, or Amazon S3 buckets.
+- Can be used to route users to infrastructure outside of AWS.
 ## Using an External DNS
 
 You can only use an external DNS if you include the CDN option and exclude the route53 option. If you are using an external DNS a CNAME record pointing to the root will invalidate all other records pointing to the root; so if you have other records pointing to your root, for example mail exchange (MX) records to send/receive email with your custom domain you will have to perform some additional steps.
 
-Instead of pointing the CNAME record to the root, you can point to the CNAME to the www subdomain. Then you can create a reroute or FWD record in your DNS provider console to reroute all http requests coming in to the root to the www.
+Instead of pointing the CNAME record to the root, you can point the CNAME to the www subdomain. Then you can create a reroute or FWD record in your DNS provider console to reroute all http requests coming in to the root to the www.
 You can check out the following links to learn how to reroute requests in major DNS providers
 
 - Namecheap
@@ -678,7 +679,7 @@ OPTIONS
   -c, --cdn            creates a CloudFront distribution for your site.
   -e, --error=error    [default: error.html] name of the error document
 
-  -h, --https          creates and validates a TLS certificate for your site. If you arent using a route53 DNS you must
+  -h, --https          creates and validates a TLS certificate for your site. If you aren't using a route53 DNS you must
                        create a CNAME record manually in your DNS.
 
   -i, --index=index    [default: index.html] name of the index document. default is index.html
@@ -754,7 +755,7 @@ ARGUMENTS
             files (default).
 
 OPTIONS
-  -b, --backwards            Update JSON locale accoridng to changes made in the HTML file. Must be used together with
+  -b, --backwards            Update JSON locale according to changes made in the HTML file. Must be used together with
                              the update flag.
 
   -c, --create               Create locale/s for your site. When used with translate flags, it generates a translated
@@ -767,7 +768,7 @@ OPTIONS
   -t, --translate=translate  desired translation language. You may apply this flag multiple times to translate into
                              multiple languages.
 
-  -u, --update               Update HTML file accoridng to changes made in the JSON locale.
+  -u, --update               Update HTML file according to changes made in the JSON locale.
 
 DESCRIPTION
   ...
@@ -788,9 +789,9 @@ ARGUMENTS
   FILENAME  name of the file i.e. index.html
 
 OPTIONS
-  -c, --css     minifiy css using cssnano
+  -c, --css     minify css using cssnano
   -h, --html    compress html using html-minifier
-  -i, --images  compress images and if possible maintain the format. otherwise its converted to png.
+  -i, --images  compress images and if possible maintain the original format otherwise it's converted to png.
   -j, --js      minify js using uglify js
 
   -w, --webp    saves a webp version of each image, then replaces each image instance in the html files with a picture
@@ -828,7 +829,7 @@ _See code: [src/commands/upload.js](https://github.com/arjan-tools/cli/blob/v0.1
 ## Arjan Build
 
 **createDir(dir)**
-- **Description:** Writes a directory only if it didnt previously exist.
+- **Description:** Writes a directory only if it didn't previously exist.
 - **params:(dir)**
     - **dir:** string: name of the directory to build.
 - **returns:** Promise(resolve, reject)
@@ -869,8 +870,8 @@ _See code: [src/commands/upload.js](https://github.com/arjan-tools/cli/blob/v0.1
 - **Description:** Translates each value using amazon translate then generates or re-writes a JSON file that contains ids and translated values. 
 - **params: (input, language, translation)**
     - **input:** string: Locale to parse
-    - **language:** string: Approporiate lanugage code for the input locale’s language.
-    - **translation:** string: Appropriate lanugage code for the desired output language
+    - **language:** string: Appropriate language code for the input locale’s language.
+    - **translation:** string: Appropriate language code for the desired output language
 - **returns:** Promise(resolve, reject)
     - **resolve:** translation: string
     - **reject:** error
@@ -887,16 +888,16 @@ _See code: [src/commands/upload.js](https://github.com/arjan-tools/cli/blob/v0.1
 **jsonToCsv(lang, obj)**
 - **description:** converts a JSON locale into a CSV.
 - **params:(lang, obj)**
-    - **lang:** string: Approproate language code for the language of the file.
+    - **lang:** string: Appropriate language code for the language of the file.
     - **obj:** string: Properly formatted JSON locale as a string.
 - **returns:** Promise(resolve, reject)
-    - **resolve:** csv: string: a string with the output CSV
+    - **resolve:** csv: string: a string with the output CSV.
     - **reject:** error
     
 **csvToJson(lang, csv)**
 - **description:** reads a CSV file and converts it to JSON
 - **params: (lang, csv)**
-    - **lang:** string: Approproate language code for the language of the file
+    - **lang:** string: Appropriate language code for the language of the file.
     - **csv:** string: a string formatted in CSV.
 - **returns:** Promise(resolve, reject)
     - **resolve:** string: a string with the JSON object.
@@ -907,10 +908,10 @@ _See code: [src/commands/upload.js](https://github.com/arjan-tools/cli/blob/v0.1
 **copyFile(filename, output)**
 - **Description:** Copy a file into another directory.
 - **params:** **(filename, output)**
-    - **filename:** string: Path of the file
-    - **outputDir:** string: the output directory in which you want to save the file
+    - **filename:** string: Path of the file.
+    - **outputDir:** string: the output directory in which you want to save the file.
 - **returns:** Promise(resolve, reject)
-    - **resolve:** string: path of the file
+    - **resolve:** string: path of the file.
     - **reject:** error
     
 **scanFolder(currentDirPath, outputDir, ignorePaths, callback)**
@@ -919,7 +920,7 @@ _See code: [src/commands/upload.js](https://github.com/arjan-tools/cli/blob/v0.1
     - **currentDirPath:** string: Path of the current directory
     contents: string
     - **outputDir:** string: output directory in which to copy the file to.
-    - **ignorePaths:** Object: a json object that contains filepaths to ignore as values and true|false as values.
+    - **ignorePaths:** Object: a JSON object that contains filepaths to ignore as values and true|false as values.
     - **callback:** **(filePath, stat)**
     
 **compressImages(filePath, output, imageArr, svgoConfig)**
@@ -956,10 +957,10 @@ _See code: [src/commands/upload.js](https://github.com/arjan-tools/cli/blob/v0.1
 **runAudit(dir, index, port, threshold)**
 - **description:** starts a simple local static server with express, runs a lighthouse audit using lighthouse 6. Then it returns a JSON object with lighthouse scores + audit report details and exits the local server.
 - **params: (dir, index, port, threshold)**
-    - **dir:** string: desired direcotry to serve e.g. dep_pack
+    - **dir:** string: desired directory to serve e.g. dep_pack
     index: string: path of the file you want to audit; typically index.html.
     - **port:** int: desired port number to use in the audit.
-    - **threshold:** float: number between 0 and 1. something bellow the threshold is considered a bad score. e.g. if you are a B student your threshold would be .8
+    - **threshold:** float: number between 0 and 1. something below the threshold is considered a bad score. e.g. if you are a B student your threshold would be .8
 - **returns:** Promise(resolve, reject)
     - **resolve:** string: formatted
     - **reject:** error
@@ -972,8 +973,8 @@ _See code: [src/commands/upload.js](https://github.com/arjan-tools/cli/blob/v0.1
     - **domainName:** string: domain name of your site i.e. yoursite.com
     - **index:** string: Index document for your site i.e. index.html
     - **error:** string: error document for your site i.e. error.html
-    - **www:** boolean: option to add re route  bucket from www to root 
-    - **cdn:** boolean: option to add a Cloudfront distribuition to your stack
+    - **www:** boolean: option to add reroute  bucket from www to root 
+    - **cdn:** boolean: option to add a Cloudfront distribution to your stack
     - **route53:** boolean: option to add a Domain Name System DNS
     - **https:** boolean: option to add a digital certificate 
 - **returns:** Promise(resolve, error)
@@ -1014,11 +1015,11 @@ _See code: [src/commands/upload.js](https://github.com/arjan-tools/cli/blob/v0.1
 - **params: (domainName)**
     - **domainName:** string: domain of your site i.e. yoursite.com
 - **returns:** Promise(resolve, reject)
-    - **resolve:** string: ARN of the ACM certficate
+    - **resolve:** string: ARN of the ACM certificate
     - **reject:** error    
 
 **describeCertificate**
-- **description:** gets the CNAME records required to verifiy the ACM certificate.
+- **description:** gets the CNAME records required to verify the ACM certificate.
 - **params: (certificateArn)**
     - **certificateArn:** string: ARN (amazon resource number) for the ACM certificate.
 - **returns: Promise(resolve, reject)**
@@ -1061,7 +1062,7 @@ _See code: [src/commands/upload.js](https://github.com/arjan-tools/cli/blob/v0.1
     - **reject:** error
     
 **stackExists(stackName)**
-- **description:** check if a given cloudFormation stack exists. if the stack doesnt exist, the promise resolves with a null value.
+- **description:** Check if a given CloudFormation stack exists. If the stack does not exists, the promise resolves with a null value.
 - **params: (stackName)**
     - **stackName:** string: name of the stack
 - **returns:** Promise(resolve, reject)
@@ -1077,7 +1078,7 @@ _See code: [src/commands/upload.js](https://github.com/arjan-tools/cli/blob/v0.1
     - **reject:** error
     
 **distributionExists**
-- **description:** check if a cloudFormation distribution exists for a given domain. if it doesnt exist, the promise resolves a null.
+- **description:** Check if a CloudFormation distribution exists for a given domain. If it doesn't exist, the promise resolves a null.
 - **params: (domainName)**
     - **domainName:** string: domain of your site i.e. yoursite.com
 - **returns:** Promise(resolve, reject)
