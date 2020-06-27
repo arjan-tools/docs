@@ -600,6 +600,13 @@ You can check out the following links to learn how to reroute requests in major 
 - Marcaria
 - Google domains
 
+# Create a New Command
+Feel like arjan is missing features? we do too! Since arjan isnt really a framework you can create or use any kind of node module as a plugin. To create a new command for your plugin you can run `oclif command COMMAND_NAME`. For more info on extending the cli commands checkout [oclif's docs](https://oclif.io/docs/introduction.html). 
+
+If you want your command to be added to arjans next version [create a feature request in the cli's repo](https://github.com/arjan-tools/cli/issues/new?assignees=&labels=&template=feature_request.md&title=)
+
+## 
+
 
 # CLI
 
